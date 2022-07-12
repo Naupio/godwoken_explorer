@@ -12,6 +12,11 @@
       <%= select f, :type, ["Bridge": "bridge", "Native": "native"] %>
       <%= error_tag f, :type %>
     </div>
+    <div class="torch-form-group">
+      <%= label f, :eth_type %>
+      <%= select f, :eth_type, ["ERC20": "erc20", "ERC721": "erc721", "ERC1155": "erc1155"] %>
+      <%= error_tag f, :eth_type %>
+    </div>
 
     <%= if @conn.request_path == "/admin/udts/new" do %>
       <div class="torch-form-group">
@@ -22,9 +27,9 @@
     <% end %>
 
     <div class="torch-form-group">
-      <%= label f, :bridge_account_eth_address, "bridge_account_eth_address(polyjuice contract eth address)" %>
-      <%= text_input f, :bridge_account_eth_address %>
-      <%= error_tag f, :bridge_account_eth_address %>
+      <%= label f, :contract_address_hash, "contract_address_hash" %>
+      <%= text_input f, :contract_address_hash %>
+      <%= error_tag f, :contract_address_hash %>
     </div>
 
     <div class="torch-form-group">
@@ -100,7 +105,7 @@
 <% end %>
 <script>
 const selectElement = document.querySelector('#torch-form_type');
-const bridgeAccountIdElement = document.querySelector('#torch-form_bridge_account_eth_address');
+const bridgeAccountIdElement = document.querySelector('#torch-form_contract_address_hash');
 const scriptHashElement = document.querySelector('#torch-form_script_hash');
 const codeHashElement = document.querySelector('#torch-form_udt_type_script_code_hash');
 const argsElement = document.querySelector('#torch-form_udt_type_script_args');
