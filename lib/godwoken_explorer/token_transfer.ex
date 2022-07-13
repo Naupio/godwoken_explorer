@@ -121,7 +121,7 @@ defmodule GodwokenExplorer.TokenTransfer do
         join: u in UDT,
         on: u.contract_address_hash == tt.token_contract_address_hash,
         where: ^to_condition,
-        where: u.eth_type == :erc20
+        where: u.eth_type == :erc20,
         select: %{
           transaction_hash: tt.transaction_hash,
           log_index: tt.log_index,
