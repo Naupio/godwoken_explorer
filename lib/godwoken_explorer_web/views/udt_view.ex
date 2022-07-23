@@ -2,7 +2,6 @@ defmodule GodwokenExplorer.UDTView do
   use JSONAPI.View, type: "udt"
 
   import Ecto.Query, only: [from: 2]
-  import GodwokenRPC.Util, only: [balance_to_view: 2]
 
   alias GodwokenExplorer.{UDT, Repo, Account}
   alias GodwokenExplorer.Account.CurrentUDTBalance
@@ -29,11 +28,12 @@ defmodule GodwokenExplorer.UDTView do
     to_string(udt.contract_address_hash)
   end
 
+  @spec supply(atom | %{:supply => any, optional(any) => any}, any) :: binary
   def supply(udt, _conn) do
     if is_nil(udt.supply) do
       ""
     else
-      balance_to_view(udt.supply, udt.decimal || 0)
+      udt.supply
     end
   end
 
@@ -48,16 +48,27 @@ defmodule GodwokenExplorer.UDTView do
   end
 
   def transfer_count(udt, _conn) do
-    if udt.account != nil do
-      case Repo.get_by(Account, eth_address: udt.contract_address_hash) do
-        %Account{token_transfer_count: token_transfer_count} ->
-          token_transfer_count
+    cond do
+      udt.type == :bridge and udt.bridge_account_id != nil ->
+        case Repo.get_by(Account, eth_address: udt.account.eth_address) do
+          %Account{token_transfer_count: token_transfer_count} ->
+            token_transfer_count
 
-        _ ->
-          0
-      end
-    else
-      0
+          nil ->
+            0
+        end
+
+      udt.type == :native and udt.eth_type == :erc20 and udt.contract_address_hash != nil ->
+        case Repo.get_by(Account, eth_address: udt.contract_address_hash) do
+          %Account{token_transfer_count: token_transfer_count} ->
+            token_transfer_count
+
+          nil ->
+            0
+        end
+
+      true ->
+        0
     end
   end
 
