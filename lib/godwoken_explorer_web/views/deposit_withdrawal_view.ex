@@ -68,9 +68,16 @@ defmodule GodwokenExplorer.DepositWithdrawalView do
       |> limit(@export_limit)
       |> Repo.all()
       |> Enum.map(fn struct ->
+        value =
+          if struct[:udt_id] == UDT.ckb_account_id() do
+            0
+          else
+            balance_to_view(struct[:value], struct[:udt_decimal] || 0)
+          end
+
         struct
         |> Map.merge(%{
-          value: balance_to_view(struct[:value], struct[:udt_decimal] || 0)
+          value: value
         })
       end)
     else
