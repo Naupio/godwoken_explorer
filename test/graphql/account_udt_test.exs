@@ -48,6 +48,7 @@ defmodule GodwokenExplorer.Graphql.AccountUDTTest do
         uniq_id
         udt {
           id
+          type
           name
           bridge_account_id
           script_hash
