@@ -182,14 +182,23 @@ defmodule GodwokenExplorer.Graphql.UDTTest do
 
   test "graphql: native udt holders ", %{
     conn: conn,
+    ckb_udt: ckb_udt,
     native_udt: native_udt
   } do
     contract_address_hash = native_udt.contract_address_hash
 
-    _cub =
+    cub =
       Factory.insert!(:current_udt_balance,
         token_contract_address_hash: contract_address_hash,
         value: Enum.random(1..100_000)
+      )
+
+    _cbub =
+      Factory.insert!(:current_bridged_udt_balance,
+        address_hash: cub.address_hash,
+        value: Enum.random(1..100_000),
+        udt_id: ckb_udt.id,
+        udt_script_hash: ckb_udt.script_hash
       )
 
     query = """
