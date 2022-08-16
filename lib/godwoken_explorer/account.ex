@@ -18,6 +18,7 @@ defmodule GodwokenExplorer.Account do
   alias GodwokenExplorer.Chain.Events.Publisher
   alias GodwokenExplorer.Counters.{AddressTokenTransfersCounter, AddressTransactionsCounter}
   alias GodwokenExplorer.Chain.{Hash, Import, Data}
+  alias GodwokenExplorer.Graphql.Workers.Sourcify, as: ObanSourcify
 
   alias GodwokenExplorer.Graphql.Sourcify
 
@@ -623,18 +624,31 @@ defmodule GodwokenExplorer.Account do
         on_conflict: :nothing
       )
 
-    polyjuice_contract_account_list = Enum.filter(account_list, &(&1.type == :polyjuice_contract))
+    case return do
+      {:ok, return_accounts} ->
+        polyjuice_contract_account_list =
+          return_accounts
+          |> Enum.filter(&(&1.type == :polyjuice_contract))
 
-    if length(polyjuice_contract_account_list) > 0 do
-      Task.async_stream(
-        polyjuice_contract_account_list,
-        fn contract_account ->
-          Sourcify.verify_and_update_from_sourcify(contract_account.eth_address)
+        if length(polyjuice_contract_account_list) > 0 do
+          polyjuice_contract_account_list
+          |> Enum.each(fn pc_account ->
+            pc_account |> ObanSourcify.new() |> Oban.insert()
+          end)
+
+          # Task.async_stream(
+          #   polyjuice_contract_account_list,
+          #   fn contract_account ->
+          #     GodwokenExplorer.Graphql.Sourcify.verify_and_update_from_sourcify(contract_account.eth_address)
+          #   end
+          # )
         end
-      )
-    end
 
-    return
+        return
+
+      _ ->
+        return
+    end
   end
 
   def manual_create_account!(id) do
