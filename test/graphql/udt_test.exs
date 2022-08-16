@@ -179,4 +179,50 @@ defmodule GodwokenExplorer.Graphql.UDTTest do
              json_response(conn, 200)
            )
   end
+
+  test "graphql: eth_type with udts ", %{conn: conn, native_udt: native_udt} do
+    _contract_address_hash = native_udt.contract_address_hash
+
+    query = """
+    query {
+      udts(
+        input: {
+          limit: 3
+          sorter: [{ sort_type: ASC, sort_value: NAME }]
+        }
+      ) {
+        entries {
+          id
+          name
+          type
+          supply
+          account {
+            eth_address
+            script_hash
+          }
+        }
+        metadata {
+          total_count
+          after
+          before
+        }
+      }
+    }
+    """
+
+    conn =
+      post(conn, "/graphql", %{
+        "query" => query,
+        "variables" => %{}
+      })
+
+    assert match?(
+             %{
+               "data" => %{
+                 "udts" => %{}
+               }
+             },
+             json_response(conn, 200)
+           )
+  end
 end

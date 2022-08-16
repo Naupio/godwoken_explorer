@@ -230,6 +230,10 @@ defmodule GodwokenExplorer.Graphql.Types.TokenTransfer do
     """
     field :combine_from_to, :boolean, default_value: true
     field :token_contract_address_hash, :hash_address
+
+    field :eth_type, :eth_type
+    field :token_id, :decimal
+
     import_fields(:age_range_input)
     import_fields(:paginate_input)
     import_fields(:block_range_input)

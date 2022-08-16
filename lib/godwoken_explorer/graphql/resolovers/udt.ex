@@ -66,6 +66,9 @@ defmodule GodwokenExplorer.Graphql.Resolvers.UDT do
           {:type, value} ->
             dynamic([u], ^acc and u.type == ^value)
 
+          {:eth_type, value} ->
+            dynamic([u], ^acc and u.eth_type == ^value)
+
           _ ->
             acc
         end
