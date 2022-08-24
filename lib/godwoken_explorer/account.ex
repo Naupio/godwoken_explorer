@@ -19,9 +19,6 @@ defmodule GodwokenExplorer.Account do
   alias GodwokenExplorer.Counters.{AddressTokenTransfersCounter, AddressTransactionsCounter}
   alias GodwokenExplorer.Chain.{Hash, Import, Data}
   alias GodwokenExplorer.Graphql.Workers.Sourcify, as: ObanSourcify
-
-  alias GodwokenExplorer.Graphql.Sourcify
-
   @polyjuice_creator_args_length 74
   @yok_mainnet_account_id 12119
   @erc20_mainnet_v1_account_id 33
