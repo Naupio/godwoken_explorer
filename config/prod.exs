@@ -35,12 +35,8 @@ config :godwoken_explorer, GodwokenExplorer.PromEx,
   drop_metrics_groups: [],
   grafana: [
     host: System.get_env("GRAFANA_HOST"),
-    # Or authenticate via Basic Auth
-    username: System.get_env("GRAFANA_USERNAME"),
-    password: System.get_env("GRAFANA_PASSWORD"),
     auth_token: System.get_env("GRAFANA_AUTH_TOKEN"),
-
-    # This is an optional setting and will default to `true`
-    upload_dashboards_on_start: true
+    upload_dashboards_on_start: true,
+    folder_name: System.get_env("GRAFANA_FOLDER_NAME")
   ],
   metrics_server: :disabled
