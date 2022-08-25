@@ -62,9 +62,6 @@ services:
       - GRAFANA_HOST
       - GRAFANA_AUTH_TOKEN
       - GRAFANA_FOLDER_NAME
-      - GRAFANA_HOST
-      - GRAFANA_AUTH_TOKEN
-      - GRAFANA_FOLDER_NAME
       - GRAFANA_DATASOURCE_ID
     ports:
       - 4001:4001
