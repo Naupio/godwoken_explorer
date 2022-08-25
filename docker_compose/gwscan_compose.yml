@@ -56,8 +56,13 @@ services:
       - GWSCAN_BLOCK_BATCH_SIZE
       - GWSCAN_MULTIPLE_L1_BLOCK_ONCE
       - GWSCAN_L1_BLOCK_BATCH_SIZE
+      - GRAFANA_HOST
+      - GRAFANA_AUTH_TOKEN
+      - GRAFANA_FOLDER_NAME
+      - GRAFANA_DATASOURCE_ID
     ports:
       - 4001:4001
+      - 9568:9568
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
