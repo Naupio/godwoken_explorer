@@ -59,6 +59,10 @@ services:
       - SOURCIFY_SERVER_URL
       - SOURCIFY_CHAIN_ID
       - SOURCIFY_REPO_URL
+      - GRAFANA_HOST
+      - GRAFANA_USERNAME
+      - GRAFANA_PASSWORD
+      - GRAFANA_AUTH_TOKEN
     ports:
       - 4001:4001
     extra_hosts:
