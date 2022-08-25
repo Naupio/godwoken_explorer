@@ -28,3 +28,15 @@ config :logger,
     format: "$date $time $metadata[$level] $message\n",
     rotate: %{max_bytes: 52_428_800, keep: 19}
   ]
+
+config :godwoken_explorer, GodwokenExplorer.PromEx,
+  disabled: false,
+  manual_metrics_start_delay: :no_delay,
+  drop_metrics_groups: [],
+  grafana: [
+    host: System.get_env("GRAFANA_HOST"),
+    auth_token: System.get_env("GRAFANA_AUTH_TOKEN"),
+    upload_dashboards_on_start: true,
+    folder_name: System.get_env("GRAFANA_FOLDER_NAME")
+  ],
+  metrics_server: :disabled
