@@ -78,7 +78,7 @@ defmodule GodwokenExplorer.PromEx do
   @impl true
   def dashboard_assigns do
     [
-      datasource_id: "godwoken-explorer-stg",
+      datasource_id: System.get_env("GRAFANA_DATASOURCE_ID"),
       default_selected_interval: "30s"
     ]
   end

@@ -231,3 +231,17 @@ config :godwoken_explorer, :sourcify,
   # default is godwoken testnet
   chain_id: System.get_env("SOURCIFY_CHAIN_ID") || "71401",
   repo_url: System.get_env("SOURCIFY_REPO_URL") || "https://repo.sourcify.dev/contracts"
+
+config :godwoken_explorer, GodwokenExplorer.PromEx,
+  disabled: false,
+  manual_metrics_start_delay: :no_delay,
+  drop_metrics_groups: [],
+  grafana: [
+    host: System.get_env("GRAFANA_HOST"),
+    auth_token: System.get_env("GRAFANA_AUTH_TOKEN"),
+    folder_name: System.get_env("GRAFANA_FOLDER_NAME"),
+    upload_dashboards_on_start: true,
+    annotate_app_lifecycle: true
+  ],
+  grafana_agent: :disabled,
+  metrics_server: :disabled
