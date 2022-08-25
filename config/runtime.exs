@@ -225,3 +225,17 @@ config :godwoken_explorer,
   block_batch_size: gwscan_block_batch_size,
   multiple_l1_block_once: gwscan_multiple_l1_block_once,
   l1_block_batch_size: gwscan_l1_block_batch_size
+
+config :godwoken_explorer, GodwokenExplorer.PromEx,
+  disabled: false,
+  manual_metrics_start_delay: :no_delay,
+  drop_metrics_groups: [],
+  grafana: [
+    host: System.get_env("GRAFANA_HOST"),
+    auth_token: System.get_env("GRAFANA_AUTH_TOKEN"),
+    folder_name: System.get_env("GRAFANA_FOLDER_NAME"),
+    upload_dashboards_on_start: true,
+    annotate_app_lifecycle: true
+  ],
+  grafana_agent: :disabled,
+  metrics_server: :disabled
