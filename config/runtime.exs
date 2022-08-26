@@ -243,5 +243,7 @@ config :godwoken_explorer, GodwokenExplorer.PromEx,
     upload_dashboards_on_start: true,
     annotate_app_lifecycle: true
   ],
-  grafana_agent: :disabled,
-  metrics_server: :disabled
+  metrics_server: [
+    port: "9568",
+    path: "/metrics"
+  ]
