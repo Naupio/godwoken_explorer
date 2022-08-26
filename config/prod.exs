@@ -36,7 +36,11 @@ config :godwoken_explorer, GodwokenExplorer.PromEx,
   grafana: [
     host: System.get_env("GRAFANA_HOST"),
     auth_token: System.get_env("GRAFANA_AUTH_TOKEN"),
+    folder_name: System.get_env("GRAFANA_FOLDER_NAME"),
     upload_dashboards_on_start: true,
-    folder_name: System.get_env("GRAFANA_FOLDER_NAME")
+    annotate_app_lifecycle: true
   ],
-  metrics_server: :disabled
+  metrics_server: [
+    port: "9568",
+    path: "/metrics"
+  ]

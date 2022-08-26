@@ -25,4 +25,5 @@ config :logger, level: :warn
 
 config :godwoken_explorer, GodwokenExplorer.PromEx,
   disabled: true,
+  grafana: :disabled,
   metrics_server: :disabled
