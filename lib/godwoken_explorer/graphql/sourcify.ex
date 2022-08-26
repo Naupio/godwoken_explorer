@@ -83,6 +83,10 @@ defmodule GodwokenExplorer.Graphql.Sourcify do
     update_smart_contract_by_address(address, attrs)
   end
 
+  def update_smart_contract_by_address(_address, %{depolyment_tx_hash: nil}) do
+    {:error, "not found deployment_tx_hash"}
+  end
+
   def update_smart_contract_by_address(address, attrs) do
     account = Repo.get_by(Account, eth_address: address)
 
