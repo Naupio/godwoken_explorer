@@ -1,6 +1,6 @@
 defmodule GodwokenExplorer.Chain.Cache.PolyVersion do
   @moduledoc """
-  Cache for block count.
+  Cache for godwoken version.
   """
 
   require Logger
@@ -10,6 +10,8 @@ defmodule GodwokenExplorer.Chain.Cache.PolyVersion do
     key: :version
 
   defp handle_fallback(:version) do
+    Logger.info("=================================")
+
     case GodwokenRPC.fetch_poly_version() do
       {:ok, response} ->
         {:update, response["versions"]}
